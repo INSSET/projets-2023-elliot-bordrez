@@ -1,7 +1,0 @@
-# config/packages/parameters.yaml
-parameters:
-    database_host: '10.5.10.1'
-    database_port: 3306
-    database_name: 'elliot.bordrez'
-    database_user: 'elliot.bordrez'
-    database_password: 'GFZF7i6q'
