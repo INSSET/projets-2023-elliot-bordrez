@@ -1,3 +1,6 @@
+parameters:
+    ewz_recaptcha_site_key: '%env(EWZ_RECAPTCHA_SITE_KEY)%'
+
 # services.yaml
 
 # ...
@@ -16,3 +19,5 @@ services:
     App\Controller\:
         resource: '../src/Controller/'
         tags: ['controller.service_arguments']
+
+    

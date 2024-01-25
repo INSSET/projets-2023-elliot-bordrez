@@ -5,41 +5,27 @@ namespace App\Entity;
 use App\Repository\UtilisateurRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass=UtilisateurRepository::class)
- */
+#[ORM\Entity(repositoryClass: UtilisateurRepository::class)]
 class Utilisateur
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column]
     private ?int $id = null;
 
-    /**
-     * @ORM\Column(length: 255)
-     */
+    #[ORM\Column(length: 255)]
     private ?string $email = null;
 
-    /**
-     * @ORM\Column(length: 25)
-     */
+    #[ORM\Column(length: 25)]
     private ?string $pseudo = null;
 
-    /**
-     * @ORM\Column
-     */
+    #[ORM\Column]
     private ?int $age = null;
 
-    /**
-     * @ORM\Column(length: 255)
-     */
+    #[ORM\Column(length: 255)]
     private ?string $password = null;
 
-    /**
-     * @ORM\Column
-     */
+    #[ORM\Column]
     private ?int $tentative_echec_connexion = null;
 
     public function getId(): ?int

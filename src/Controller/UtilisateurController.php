@@ -1,5 +1,4 @@
 <?php
-
 // src/Controller/UtilisateurController.php
 namespace App\Controller;
 
@@ -10,29 +9,32 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Form\ConnexionType;
 use App\Form\InscriptionType;
 use App\Entity\Utilisateur;
-use Symfony\Bundle\FrameworkBundle\Controller\ControllerTrait;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 
 class UtilisateurController extends AbstractController
 {
+    private $entityManager;
+
+    public function __construct(EntityManagerInterface $entityManager)
+    {
+        $this->entityManager = $entityManager;
+    }
+
     /**
      * @Route("/connexion", name="connexion")
      */
     public function connexion(Request $request): Response
     {
-        // Crée le formulaire de connexion
         $form = $this->createForm(ConnexionType::class);
 
-        // Gère la soumission du formulaire
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
-            // Redirige après la connexion
-            return $this->redirectToRoute('accueil');
+            // Faites quelque chose ici, par exemple, vérifier les informations d'authentification
         }
 
-        // Affiche la page de connexion avec le formulaire
         return $this->render('utilisateur/connexion.html.twig', [
             'form' => $form->createView(),
         ]);
@@ -41,32 +43,24 @@ class UtilisateurController extends AbstractController
     /**
      * @Route("/inscription", name="inscription")
      */
-    public function inscription(Request $request): Response
+    public function inscription(Request $request, UserPasswordEncoderInterface $passwordEncoder): Response
     {
-        // Crée une nouvelle instance de l'entité Utilisateur
-        $utilisateur = new Utilisateur();
+        $form = $this->createForm(InscriptionType::class);
 
-        // Crée le formulaire d'inscription en l'associant à l'entité Utilisateur
-        $form = $this->createForm(InscriptionType::class, $utilisateur);
-
-        // Gère la soumission du formulaire
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // Encodage du mot de passe (tu devras utiliser le composant de sécurité de Symfony ici)
-            $encodedPassword = password_hash($utilisateur->getPassword(), PASSWORD_BCRYPT);
-            $utilisateur->setPassword($encodedPassword);
+            $utilisateur = $form->getData();
 
-            // Enregistre l'utilisateur dans la base de données
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($utilisateur);
-            $entityManager->flush();
+            $password = $passwordEncoder->encodePassword($utilisateur, $utilisateur->getPlainPassword());
+            $utilisateur->setPassword($password);
 
-            // Redirige après l'inscription
+            $this->entityManager->persist($utilisateur);
+            $this->entityManager->flush();
+
             return $this->redirectToRoute('accueil');
         }
 
-        // Affiche la page d'inscription avec le formulaire
         return $this->render('utilisateur/inscription.html.twig', [
             'form' => $form->createView(),
         ]);
@@ -85,6 +79,18 @@ class UtilisateurController extends AbstractController
      */
     public function deconnexion(): Response
     {
-        return $this->redirectToRoute('accueil'); // Redirige vers la page d'accueil
+        return $this->redirectToRoute('accueil');
+    }
+
+    /**
+     * @Route("/check_keys", name="check_keys")
+     */
+    public function checkKeys(): Response
+    {
+        $ewzRecaptchaSiteKey = $this->getParameter('ewz_recaptcha_site_key');
+
+        return new Response(
+            'EWZ reCAPTCHA Site Key: ' . $ewzRecaptchaSiteKey
+        );
     }
 }

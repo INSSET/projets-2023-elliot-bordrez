@@ -20,5 +20,10 @@ deconnexion:
     path: /deconnexion
     controller: App\Controller\UtilisateurController::deconnexion
 
+check_keys:
+    path: '/check_keys'
+    controller: 'App\Controller\UtilisateurController::checkKeys'
+
+
 
 
