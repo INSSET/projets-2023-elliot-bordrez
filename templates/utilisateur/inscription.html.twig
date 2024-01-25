@@ -1,0 +1,26 @@
+{# templates/utilisateur/inscription.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h2>Inscription</h2>
+
+    {{ form_start(form) }}
+    
+    {# Affiche le champ email #}
+    {{ form_row(form.email) }}
+
+    {# Affiche le champ pseudo #}
+    {{ form_row(form.pseudo) }}
+
+    {# Affiche le champ age #}
+    {{ form_row(form.age) }}
+
+    {# Affiche le champ captcha #}
+    {{ form_row(form.captcha) }}
+
+    {# Ajoute les autres champs nécessaires #}
+
+    <button type="submit">S'inscrire</button>
+    {{ form_end(form) }}
+{% endblock %}

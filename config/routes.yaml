@@ -1,0 +1,24 @@
+# config/routes.yaml
+
+controllers:
+    resource: ../src/Controller/
+    type: attribute
+
+connexion:
+    path: /connexion
+    controller: App\Controller\UtilisateurController::connexion
+
+inscription:
+    path: /inscription
+    controller: App\Controller\UtilisateurController::inscription
+
+compte_utilisateur:
+    path: /compte
+    controller: App\Controller\UtilisateurController::compteUtilisateur
+
+deconnexion:
+    path: /deconnexion
+    controller: App\Controller\UtilisateurController::deconnexion
+
+
+
