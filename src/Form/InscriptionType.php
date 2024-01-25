@@ -17,15 +17,14 @@ class InscriptionType extends AbstractType
             ->add('pseudo')
             ->add('age')
             ->add('password', PasswordType::class) // Champ pour le mot de passe
-            ->add('captcha') // À définir selon tes besoins
-            // Ajoute les autres champs nécessaires
+            ->add('captcha') 
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            // Configure tes options de formulaire ici si nécessaire
+            
         ]);
     }
 }

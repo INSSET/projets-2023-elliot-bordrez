@@ -27,8 +27,6 @@ class UtilisateurController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // Ici, tu peux traiter la connexion, par exemple en utilisant le composant Security de Symfony
-            // ...
 
             // Redirige après la connexion
             return $this->redirectToRoute('accueil');
@@ -79,7 +77,6 @@ class UtilisateurController extends AbstractController
      */
     public function compteUtilisateur(): Response
     {
-        // Ton code pour afficher le compte utilisateur
         return $this->render('utilisateur/compte.html.twig');
     }
 
@@ -88,8 +85,6 @@ class UtilisateurController extends AbstractController
      */
     public function deconnexion(): Response
     {
-        // Ton code pour gérer la déconnexion
-        // Par exemple : $this->get('security.token_storage')->setToken(null);
         return $this->redirectToRoute('accueil'); // Redirige vers la page d'accueil
     }
 }
