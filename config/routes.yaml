@@ -23,7 +23,7 @@ compte_utilisateur:
 
 deconnexion:
     path: /deconnexion
-    controller: App\Controller\UtilisateurController::deconnexion
+    controller: App\Controller\DeconnexionController::deconnexion
 
 
 

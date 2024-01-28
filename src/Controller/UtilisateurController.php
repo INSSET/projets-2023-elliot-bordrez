@@ -41,23 +41,11 @@ class UtilisateurController extends AbstractController
             $this->entityManager->flush();
 
             // Redirige après l'inscription réussie
-            return $this->redirectToRoute('inscription');
+            return $this->redirectToRoute('accueil');
         }
 
         return $this->render('utilisateur/inscription.html.twig', [
             'InscriptionForm' => $form->createView(),
         ]);
-    }
-
-    /**
-     * @Route("/deconnexion", name="deconnexion")
-     */
-    public function deconnexion(): Response
-    {
-        // Déconnecte l'utilisateur en supprimant le token d'authentification
-        $this->tokenStorage->setToken(null);
-
-        // Redirige l'utilisateur vers la page d'accueil après la déconnexion
-        return $this->redirectToRoute('inscription');
     }
 }

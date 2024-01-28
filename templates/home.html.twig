@@ -1,27 +1,27 @@
-{# templates/home.html.twig #}
-
 {% extends 'base.html.twig' %}
+
+{% block title %}Accueil - Site Photo{% endblock %}
 
 {% block body %}
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <a class="navbar-brand" href="#">Site Photo</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ml-auto">
-          <li class="nav-item">
-            <a class="nav-link" href="connexion">Déconnexion</a>
-          </li>
-        </ul>
-      </div>
+        <a class="navbar-brand" href="#">Site Photo</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('deconnexion') }}">Déconnexion</a>
+                </li>
+            </ul>
+        </div>
     </nav>
 
     <div class="container mt-5">
-      <div class="text-center">
-        <h1>Bienvenue sur Site Photo</h1>
-        <p>Partagez vos moments inoubliables avec vos proches</p>
-        <a href="" class="btn btn-primary">Ajouter des photos</a>
-      </div>
+        <div class="text-center">
+            <h1>Bienvenue sur Site Photo</h1>
+            <p>Partagez vos moments inoubliables avec vos proches</p>
+            <a href="#" class="btn btn-primary">Ajouter des photos</a>
+        </div>
     </div>
 {% endblock %}
