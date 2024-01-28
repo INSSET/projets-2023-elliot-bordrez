@@ -4,9 +4,9 @@
 
 {% block body %}
     <h2>Inscription</h2>
-    {{ form_start(form) }}
-    {{ form_row(form.email) }}
-    {{ form_row(form.pseudo) }}
-    {{ form_row(form.age) }}
-    {{ form_end(form) }}
+    {{ form_start(InscriptionForm) }}
+    {{ form_row(InscriptionForm.email) }}
+    {{ form_row(InscriptionForm.pseudo) }}
+    {{ form_row(InscriptionForm.age) }}
+    {{ form_end(InscriptionForm) }}
 {% endblock %}

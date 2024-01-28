@@ -1,17 +1,15 @@
 <?php
-// src/Controller/UtilisateurController.php
+// src/Controller/RegistrationController.php
+
 namespace App\Controller;
 
+use App\Entity\Utilisateur; // Assurez-vous que cette ligne est présente
+use App\Form\InscriptionType;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use App\Form\ConnexionType;
-use App\Form\InscriptionType;
-use App\Entity\Utilisateur;
-use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-
 
 class UtilisateurController extends AbstractController
 {
@@ -22,75 +20,29 @@ class UtilisateurController extends AbstractController
         $this->entityManager = $entityManager;
     }
 
-    /**
-     * @Route("/connexion", name="connexion")
-     */
-    public function connexion(Request $request): Response
-    {
-        $form = $this->createForm(ConnexionType::class);
-
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            // Faites quelque chose ici, par exemple, vérifier les informations d'authentification
-        }
-
-        return $this->render('utilisateur/connexion.html.twig', [
-            'form' => $form->createView(),
-        ]);
-    }
-
-    /**
-     * @Route("/inscription", name="inscription")
-     */
-    public function inscription(Request $request, UserPasswordEncoderInterface $passwordEncoder): Response
+    #[Route('/inscription', name: 'inscription')]
+    public function inscription(Request $request): Response
     {
         $form = $this->createForm(InscriptionType::class);
-
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $utilisateur = $form->getData();
+            // Crée une instance de l'entité User à partir des données du formulaire
+            $user = new Utilisateur();
+            $user->setEmail($form->get('email')->getData());
+            $user->setPseudo($form->get('pseudo')->getData());
+            $user->setAge($form->get('age')->getData());
 
-            $password = $passwordEncoder->encodePassword($utilisateur, $utilisateur->getPlainPassword());
-            $utilisateur->setPassword($password);
-
-            $this->entityManager->persist($utilisateur);
+            // Entité
+            $this->entityManager->persist($user);
             $this->entityManager->flush();
 
-            return $this->redirectToRoute('accueil');
+            // Redirige après l'inscription réussie
+            return $this->redirectToRoute('inscription');
         }
 
         return $this->render('utilisateur/inscription.html.twig', [
-            'form' => $form->createView(),
+            'InscriptionForm' => $form->createView(),
         ]);
-    }
-
-    /**
-     * @Route("/compte", name="compte_utilisateur")
-     */
-    public function compteUtilisateur(): Response
-    {
-        return $this->render('utilisateur/compte.html.twig');
-    }
-
-    /**
-     * @Route("/deconnexion", name="deconnexion")
-     */
-    public function deconnexion(): Response
-    {
-        return $this->redirectToRoute('accueil');
-    }
-
-    /**
-     * @Route("/check_keys", name="check_keys")
-     */
-    public function checkKeys(): Response
-    {
-        $ewzRecaptchaSiteKey = $this->getParameter('ewz_recaptcha_site_key');
-
-        return new Response(
-            'EWZ reCAPTCHA Site Key: ' . $ewzRecaptchaSiteKey
-        );
     }
 }

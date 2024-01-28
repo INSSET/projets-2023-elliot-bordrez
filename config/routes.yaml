@@ -4,10 +4,10 @@ controllers:
     resource: ../src/Controller/
     type: attribute
 
-connexion:
-    path: /connexion
-    controller: App\Controller\UtilisateurController::connexion
-
+accueil:
+    path: /accueil
+    controller: 'App\Controller\HomeController::index'
+    
 inscription:
     path: /inscription
     controller: App\Controller\UtilisateurController::inscription
@@ -20,9 +20,6 @@ deconnexion:
     path: /deconnexion
     controller: App\Controller\UtilisateurController::deconnexion
 
-check_keys:
-    path: '/check_keys'
-    controller: 'App\Controller\UtilisateurController::checkKeys'
 
 
 

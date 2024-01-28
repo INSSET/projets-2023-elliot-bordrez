@@ -3,10 +3,25 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Bienvenue sur la page d'accueil</h1>
-    {# Affichez le formulaire de connexion #}
-    {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button type="submit">Se connecter</button>
-    {{ form_end(form) }}
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <a class="navbar-brand" href="#">Site Photo</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="#">Déconnexion</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <div class="container mt-5">
+      <div class="text-center">
+        <h1>Bienvenue sur Site Photo</h1>
+        <p>Partagez vos moments inoubliables avec vos proches</p>
+        <a href="" class="btn btn-primary">Ajouter des photos</a>
+      </div>
+    </div>
 {% endblock %}
