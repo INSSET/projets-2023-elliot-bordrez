@@ -12,6 +12,11 @@ inscription:
     path: /inscription
     controller: App\Controller\UtilisateurController::inscription
 
+connexion:
+    path: /connexion
+    controller: App\Controller\ConnexionController::connexion
+    methods: ['GET', 'POST']
+
 compte_utilisateur:
     path: /compte
     controller: App\Controller\UtilisateurController::compteUtilisateur

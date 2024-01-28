@@ -1,23 +1,26 @@
 <?php
-// src/Controller/RegistrationController.php
+// src/Controller/UtilisateurController.php
 
 namespace App\Controller;
 
-use App\Entity\Utilisateur; // Assurez-vous que cette ligne est présente
+use App\Entity\Utilisateur;
 use App\Form\InscriptionType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class UtilisateurController extends AbstractController
 {
     private $entityManager;
+    private $tokenStorage;
 
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(EntityManagerInterface $entityManager, TokenStorageInterface $tokenStorage)
     {
         $this->entityManager = $entityManager;
+        $this->tokenStorage = $tokenStorage;
     }
 
     #[Route('/inscription', name: 'inscription')]
@@ -27,7 +30,7 @@ class UtilisateurController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // Crée une instance de l'entité User à partir des données du formulaire
+            // Je crée une instance de l'entité Utilisateur à partir des données du formulaire
             $user = new Utilisateur();
             $user->setEmail($form->get('email')->getData());
             $user->setPseudo($form->get('pseudo')->getData());
@@ -44,5 +47,17 @@ class UtilisateurController extends AbstractController
         return $this->render('utilisateur/inscription.html.twig', [
             'InscriptionForm' => $form->createView(),
         ]);
+    }
+
+    /**
+     * @Route("/deconnexion", name="deconnexion")
+     */
+    public function deconnexion(): Response
+    {
+        // Déconnecte l'utilisateur en supprimant le token d'authentification
+        $this->tokenStorage->setToken(null);
+
+        // Redirige l'utilisateur vers la page d'accueil après la déconnexion
+        return $this->redirectToRoute('inscription');
     }
 }
